@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "outputDirectory": ".",
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*\\.(html|css|js|json|png|jpg|ico|svg|woff|woff2|ttf))", "dest": "/$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
