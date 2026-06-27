@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     :root {
       --bg: #0a0a0c; --bg-elevated: #141416; --bg-card: rgba(20,20,22,0.7);
       --surface: #1a1a1e; --surface-hover: #242428;
@@ -465,10 +465,17 @@
       .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
       .hamburger.active span:nth-child(2) { opacity: 0; }
       .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
-      .hero { padding: 100px 5% 60px; min-height: 100svh; }
+      .hero { padding: 100px 5% 60px; min-height: 100dvh; overflow: hidden; }
+      .hero-blob:nth-child(1) { width: 200px; height: 200px; }
+      .hero-blob:nth-child(2) { width: 160px; height: 160px; }
+      .hero-blob:nth-child(3) { width: 120px; height: 120px; }
       .hero-content { opacity: 1 !important; transform: none !important; animation: none !important; }
       .hero h1 { font-size: clamp(1.6rem, 7vw, 2.4rem); letter-spacing: -0.5px; line-height: 1.15; }
-      .hero h1 .gradient-text { background: linear-gradient(135deg, var(--gold-light), var(--gold), #ef4444, var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      .hero h1 .gradient-text {
+        background: linear-gradient(135deg, var(--gold-light), var(--gold), #ef4444, var(--gold));
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        animation: none !important;
+      }
       .hero-badge { font-size: 0.7rem; padding: 6px 16px; margin-bottom: 20px; }
       .hero p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; }
       .hero-buttons { gap: 10px; }
@@ -507,7 +514,7 @@
       .whatsapp-float { width: 46px; height: 46px; font-size: 1.3rem; bottom: 16px; left: 16px; }
     }
     @media (max-width: 400px) {
-      .hero { padding: 80px 4% 40px; }
+      .hero { padding: 80px 4% 40px; min-height: 100dvh; }
       .hero h1 { font-size: 1.4rem; }
       .hero p { font-size: 0.82rem; }
       .hero-buttons .btn { padding: 10px 18px; font-size: 0.75rem; gap: 6px; }
@@ -1012,6 +1019,7 @@
     });
 
     function scrambleText(el, finalText) {
+      if (window.innerWidth <= 768) { el.textContent = finalText; return; }
       const chars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`';
       const letters = finalText.split('');
       let frame = 0;
