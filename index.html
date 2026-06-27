@@ -103,7 +103,8 @@
       66% { transform: translate(-20px, 15px) scale(0.95); }
       100% { transform: translate(10px, -10px) scale(1.02); }
     }
-    .hero-content { text-align: center; position: relative; z-index: 2; max-width: 800px; animation: hero-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+    .hero-content { text-align: center; position: relative; z-index: 2; max-width: 800px; }
+    .hero-content.animate { animation: hero-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
     @keyframes hero-entrance { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -447,8 +448,12 @@
     /* RESPONSIVE */
     @media (max-width: 1024px) {
       .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { gap: 40px; }
     }
     @media (max-width: 768px) {
+      section { padding: 60px 5%; }
+      nav { padding: 14px 5%; }
+      nav.scrolled { padding: 12px 5%; }
       .nav-links {
         position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
         background: rgba(12,10,9,0.96); backdrop-filter: blur(40px);
@@ -460,10 +465,54 @@
       .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
       .hamburger.active span:nth-child(2) { opacity: 0; }
       .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+      .hero { padding: 100px 5% 60px; min-height: 100svh; }
+      .hero h1 { font-size: clamp(1.6rem, 7vw, 2.4rem); letter-spacing: -0.5px; line-height: 1.15; }
+      .hero-badge { font-size: 0.7rem; padding: 6px 16px; margin-bottom: 20px; }
+      .hero p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; }
+      .hero-buttons { gap: 10px; }
+      .hero-buttons .btn { padding: 12px 24px; font-size: 0.8rem; }
+      .hero-scroll { display: none; }
       .about-grid, .contact-container { grid-template-columns: 1fr; }
-      .about-stats { grid-template-columns: repeat(3, 1fr); }
+      .about-grid { gap: 32px; }
+      .about-stats { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .stat-item { padding: 14px 8px; }
+      .stat-item .num { font-size: 1.4rem; }
+      .stat-item .label { font-size: 0.65rem; }
       .services-grid { grid-template-columns: 1fr; }
-      .hero h1 { letter-spacing: -1px; }
+      .service-card { padding: 28px 20px; }
+      .products-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+      .product-img { height: 150px; }
+      .product-body { padding: 16px; }
+      .product-body h3 { font-size: 0.85rem; }
+      .product-body .price { font-size: 0.95rem; }
+      .product-body p { font-size: 0.75rem; margin-bottom: 12px; }
+      .product-body .btn { padding: 8px 16px; font-size: 0.7rem; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonial-card { padding: 24px; }
+      .section-header { margin-bottom: 40px; }
+      .section-header h2 { font-size: clamp(1.5rem, 5vw, 2rem); }
+      .about-text h3 { font-size: 1.2rem; }
+      .about-text p { font-size: 0.85rem; }
+      .contact-item { padding: 12px 14px; }
+      .contact-item .icon { width: 36px; height: 36px; font-size: 0.85rem; }
+      .contact-item .text strong { font-size: 0.8rem; }
+      .contact-item .text span { font-size: 0.75rem; }
+      .wave-divider { height: 50px; }
+      footer { padding: 32px 5%; }
+      footer .socials a { width: 36px; height: 36px; }
+      footer p { font-size: 0.75rem; }
+      .marquee-item { font-size: 0.7rem; gap: 8px; letter-spacing: 1px; }
+      .whatsapp-float { width: 46px; height: 46px; font-size: 1.3rem; bottom: 16px; left: 16px; }
+    }
+    @media (max-width: 400px) {
+      .hero { padding: 80px 4% 40px; }
+      .hero h1 { font-size: 1.4rem; }
+      .hero p { font-size: 0.82rem; }
+      .hero-buttons .btn { padding: 10px 18px; font-size: 0.75rem; gap: 6px; }
+      .about-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .stat-item .num { font-size: 1.2rem; }
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .contact-form input, .contact-form textarea { padding: 12px 14px; font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -476,7 +525,7 @@
     <div class="loader-ring"></div>
     <div class="loader-text">Loading</div>
   </div>
-  <script>setTimeout(function(){var p=document.getElementById('preloader');if(p)p.classList.add('hidden')},2500);</script>
+  <script>setTimeout(function(){var p=document.getElementById('preloader');if(p)p.classList.add('hidden');var h=document.querySelector('.hero-content');if(h)h.classList.add('animate');},2500);</script>
 
   <nav id="navbar">
     <a href="#" class="logo" id="logoText">Homo<span>s</span> Store</a>
