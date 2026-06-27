@@ -190,9 +190,73 @@
     .password-warning span { color: #ef4444; font-size: 0.9rem; }
 
     @media (max-width: 768px) {
-      .sidebar { display: none; }
-      .main-content { margin-left: 0; padding: 24px 16px; }
-      .form-row, .form-row-3 { grid-template-columns: 1fr; }
+      .sidebar {
+        transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 280px;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 99;
+        display: none; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+      }
+      .sidebar-overlay.show { display: block; }
+      .mobile-header {
+        display: flex !important; align-items: center; gap: 12px;
+        padding: 12px 16px; background: rgba(5,5,10,0.95);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        position: sticky; top: 0; z-index: 50;
+        -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+      }
+      .mobile-header .hamburger {
+        width: 40px; height: 40px; border-radius: 12px;
+        background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 5px; cursor: pointer; flex-shrink: 0;
+      }
+      .mobile-header .hamburger span {
+        width: 20px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s;
+      }
+      .mobile-header .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+      .mobile-header .hamburger.active span:nth-child(2) { opacity: 0; }
+      .mobile-header .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+      .mobile-header .mobile-title {
+        font-size: 1rem; font-weight: 700; color: #f59e0b; flex: 1;
+      }
+      .main-content { margin-left: 0; padding: 20px 16px; }
+      .main-content h1 { display: none; }
+      .main-content .subtitle { display: none; }
+      .form-row, .form-row-3 { grid-template-columns: 1fr; gap: 12px; }
+      .form-group { margin-bottom: 14px; }
+      .form-group input, .form-group textarea, .form-group select {
+        padding: 11px 14px; font-size: 0.88rem;
+      }
+      .item-card {
+        flex-wrap: wrap; gap: 10px; padding: 14px;
+      }
+      .item-card .info { min-width: 0; }
+      .item-card .info strong { font-size: 0.88rem; }
+      .item-card .info span { font-size: 0.78rem; }
+      .item-card .actions { width: 100%; justify-content: flex-end; margin-top: 4px; }
+      .btn { padding: 11px 22px; font-size: 0.88rem; }
+      .btn-sm { padding: 7px 14px; font-size: 0.78rem; }
+      .password-warning { flex-wrap: wrap; padding: 14px; gap: 8px; }
+      .password-warning span { font-size: 0.82rem; }
+      .section-card h2 { font-size: 1.1rem; margin-bottom: 16px; padding-bottom: 10px; }
+      .toast {
+        bottom: 16px; right: 16px; left: 16px; text-align: center;
+        font-size: 0.85rem; padding: 12px 16px;
+      }
+    }
+    @media (max-width: 768px) {
+      .modal-backdrop { padding: 12px !important; }
+      .modal-backdrop > div { padding: 20px !important; border-radius: 16px !important; width: 100% !important; }
+      .modal-backdrop > div .form-row, .modal-backdrop > div .form-row-3 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .main-content { padding: 16px 12px; }
+      .btn { padding: 10px 18px; font-size: 0.82rem; }
+      .item-card { padding: 12px; }
+      .item-card .actions { gap: 6px; }
     }
   </style>
 </head>
@@ -209,6 +273,13 @@
 </div>
 
 <div class="dashboard" id="dashboard" style="display:none">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="mobile-header" id="mobileHeader" style="display:none;">
+    <div class="hamburger" id="mobileHamburger">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="mobile-title">Homos Store Admin</div>
+  </div>
   <div class="sidebar" id="sidebar">
     <div class="logo">Homos Store Admin</div>
     <a class="active" data-section="general"><i class="fas fa-cog"></i> General</a>
@@ -732,8 +803,33 @@ async function init() {
       document.querySelectorAll('.section-card').forEach(c => c.classList.remove('active'));
       const section = document.getElementById('section-' + link.dataset.section);
       if (section) section.classList.add('active');
+      // Close mobile sidebar
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('show');
+      const mh = document.getElementById('mobileHamburger');
+      if (mh) mh.classList.remove('active');
     });
   });
+
+  // Mobile sidebar toggle
+  const mobileHamburger = document.getElementById('mobileHamburger');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  if (mobileHamburger) {
+    mobileHamburger.addEventListener('click', () => {
+      const sidebar = document.getElementById('sidebar');
+      const isOpen = sidebar.classList.contains('open');
+      sidebar.classList.toggle('open');
+      sidebarOverlay.classList.toggle('show');
+      mobileHamburger.classList.toggle('active');
+    });
+  }
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('open');
+      sidebarOverlay.classList.remove('show');
+      if (mobileHamburger) mobileHamburger.classList.remove('active');
+    });
+  }
 
   document.getElementById('logoutBtn').addEventListener('click', () => {
     adminPassword = '';
@@ -925,6 +1021,7 @@ function renderProducts() {
 
 function showProductForm(data, callback) {
   const overlay = document.createElement('div');
+  overlay.className = 'modal-backdrop';
   overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;padding:20px';
   const modal = document.createElement('div');
   modal.style.cssText = 'background:#0a0a15;border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:32px;width:480px;max-width:100%;max-height:90vh;overflow-y:auto';
@@ -1038,6 +1135,7 @@ function deleteProduct(i) {
 
 function importProducts() {
   const overlay = document.createElement('div');
+  overlay.className = 'modal-backdrop';
   overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px';
   const modal = document.createElement('div');
   modal.style.cssText = 'background:#0a0a15;border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:32px;width:720px;max-width:100%;max-height:90vh;overflow-y:auto';
