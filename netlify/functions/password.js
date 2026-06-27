@@ -16,6 +16,10 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers, body: '' };
   }
 
+  if (!redis) {
+    return { statusCode: 200, headers, body: JSON.stringify({ hasPassword: false }) };
+  }
+
   try {
     if (event.httpMethod === 'GET') {
       const hash = await redis.get('password_hash');

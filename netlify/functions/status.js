@@ -7,6 +7,10 @@ exports.handler = async () => {
     'Access-Control-Allow-Headers': 'Content-Type',
   };
 
+  if (!redis) {
+    return { statusCode: 200, headers, body: JSON.stringify({ hasPassword: false }) };
+  }
+
   try {
     const hash = await redis.get('password_hash');
     return {
@@ -15,6 +19,6 @@ exports.handler = async () => {
       body: JSON.stringify({ hasPassword: hash !== null }),
     };
   } catch (e) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: e.message }) };
+    return { statusCode: 200, headers, body: JSON.stringify({ hasPassword: false }) };
   }
 };

@@ -11,6 +11,10 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers, body: '' };
   }
 
+  if (!redis) {
+    return { statusCode: 200, headers, body: '{}' };
+  }
+
   try {
     if (event.httpMethod === 'GET') {
       const raw = await redis.get('site_data');
@@ -31,6 +35,6 @@ exports.handler = async (event) => {
 
     return { statusCode: 405, headers, body: '' };
   } catch (e) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: e.message }) };
+    return { statusCode: 200, headers, body: '{}' };
   }
 };
