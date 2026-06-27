@@ -66,7 +66,8 @@
     }
     .login-box .btn:hover::after { left: 125%; }
 
-    .dashboard { display: flex; min-height: 100vh; }
+    .dashboard { display: none; min-height: 100vh; }
+    .dashboard.visible { display: flex; }
     .sidebar {
       width: 240px; background: linear-gradient(180deg, #0a0a15, #05050a);
       border-right: 1px solid rgba(255,255,255,0.04);
@@ -190,7 +191,7 @@
     .password-warning span { color: #ef4444; font-size: 0.9rem; }
 
     @media (max-width: 768px) {
-      .dashboard { display: block !important; min-height: 100vh; overflow-x: hidden; }
+      .dashboard.visible { display: block !important; min-height: 100vh; overflow-x: hidden; }
       .sidebar {
         position: fixed; top: 0; left: 0; bottom: 0;
         transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -274,7 +275,7 @@
   </div>
 </div>
 
-<div class="dashboard" id="dashboard" style="display:none">
+<div class="dashboard" id="dashboard">
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   <div class="mobile-header" id="mobileHeader" style="display:none;">
     <div class="hamburger" id="mobileHamburger">
@@ -719,7 +720,8 @@ async function saveData() {
         if (result.ok) {
           adminPassword = val;
           ls.classList.add('hidden');
-          db.style.display = 'flex';
+          db.classList.add('visible');
+          db.style.display = '';
           await init();
         } else {
           err.textContent = result.error || 'Error';
@@ -735,7 +737,8 @@ async function saveData() {
         if (result.ok) {
           adminPassword = val;
           ls.classList.add('hidden');
-          db.style.display = 'flex';
+          db.classList.add('visible');
+          db.style.display = '';
           await init();
         } else {
           err.textContent = 'Wrong password';
@@ -836,7 +839,7 @@ async function init() {
   document.getElementById('logoutBtn').addEventListener('click', () => {
     adminPassword = '';
     document.getElementById('loginScreen').classList.remove('hidden');
-    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('dashboard').classList.remove('visible');
     document.getElementById('loginPassword').value = '';
     document.getElementById('loginError').style.display = 'none';
   });
