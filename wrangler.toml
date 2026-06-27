@@ -1,0 +1,7 @@
+name = "homos-store"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "HOMOS_KV"
+id = "5c618690a2154e6882dfec55676504e7"
