@@ -527,7 +527,7 @@
     <div class="loader-ring"></div>
     <div class="loader-text">Loading</div>
   </div>
-  <script>setTimeout(function(){var p=document.getElementById('preloader');if(p)p.classList.add('hidden');var h=document.querySelector('.hero-content');if(h)h.classList.add('animate');},2500);</script>
+  <script>setTimeout(function(){var p=document.getElementById('preloader');if(p)p.classList.add('hidden');if(window.innerWidth>768){var h=document.querySelector('.hero-content');if(h)h.classList.add('animate');}},2500);</script>
 
   <nav id="navbar">
     <a href="#" class="logo" id="logoText">Homo<span>s</span> Store</a>
