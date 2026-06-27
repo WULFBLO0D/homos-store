@@ -1,0 +1,7 @@
+data.json
+password.hash
+node_modules/
+.opencode/
+fly.toml
+Dockerfile
+.dockerignore
