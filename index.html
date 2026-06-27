@@ -83,7 +83,7 @@
     /* HERO */
     .hero {
       min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; padding: 120px 5% 80px;
+      position: relative; padding: 120px 5% 80px;
     }
     .hero-mesh {
       position: absolute; inset: 0; z-index: 0;
@@ -103,8 +103,8 @@
       66% { transform: translate(-20px, 15px) scale(0.95); }
       100% { transform: translate(10px, -10px) scale(1.02); }
     }
-    .hero-content { text-align: center; position: relative; z-index: 2; max-width: 800px; }
-    .hero-content.animate { animation: hero-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+    .hero-content { text-align: center; position: relative; z-index: 2; max-width: 800px; opacity: 1; }
+    .hero-content.animate { animation: hero-entrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes hero-entrance { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -466,7 +466,9 @@
       .hamburger.active span:nth-child(2) { opacity: 0; }
       .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
       .hero { padding: 100px 5% 60px; min-height: 100svh; }
+      .hero-content { opacity: 1 !important; transform: none !important; animation: none !important; }
       .hero h1 { font-size: clamp(1.6rem, 7vw, 2.4rem); letter-spacing: -0.5px; line-height: 1.15; }
+      .hero h1 .gradient-text { background: linear-gradient(135deg, var(--gold-light), var(--gold), #ef4444, var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
       .hero-badge { font-size: 0.7rem; padding: 6px 16px; margin-bottom: 20px; }
       .hero p { font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; }
       .hero-buttons { gap: 10px; }
