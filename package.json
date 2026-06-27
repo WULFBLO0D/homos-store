@@ -1,8 +1,11 @@
 {
   "name": "homos-store",
   "version": "1.0.0",
-  "description": "Homos Store - admin backend",
+  "description": "Homos Store - Premium Phone Accessories & Repair",
   "main": "server.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "node server.js"
   },
