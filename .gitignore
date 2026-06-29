@@ -2,4 +2,5 @@ data.json
 password.hash
 node_modules/
 .opencode/
+_kv_upload.json
 
