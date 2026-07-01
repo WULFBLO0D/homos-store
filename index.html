@@ -5,14 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="pageTitle">Homos Store - Premium Phone Accessories & Repair</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preload" href="fonts/cairo-arabic.woff2" as="font" type="font/woff2" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    @font-face { font-family: 'Cairo'; font-style: normal; font-weight: 400; font-display: block; src: url(fonts/cairo-arabic.woff2) format('woff2'), url(fonts/cairo-latin.woff2) format('woff2'); }
-    @font-face { font-family: 'Cairo'; font-style: normal; font-weight: 600; font-display: block; src: url(fonts/cairo-arabic.woff2) format('woff2'), url(fonts/cairo-latin.woff2) format('woff2'); }
-    @font-face { font-family: 'Cairo'; font-style: normal; font-weight: 700; font-display: block; src: url(fonts/cairo-arabic.woff2) format('woff2'), url(fonts/cairo-latin.woff2) format('woff2'); }
-    @font-face { font-family: 'Cairo'; font-style: normal; font-weight: 900; font-display: block; src: url(fonts/cairo-arabic.woff2) format('woff2'), url(fonts/cairo-latin.woff2) format('woff2'); }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -734,20 +727,14 @@
     }
 
     function initPage() {
+      if (initPage._done) return;
+      initPage._done = true;
       switchLanguage(currentLang);
       hidePreloader();
     }
 
-    if (document.fonts && document.fonts.load) {
-      Promise.all([
-        document.fonts.load('1rem "Space Grotesk"'),
-        document.fonts.load('1rem "Syne"'),
-        document.fonts.load('1rem Cairo')
-      ]).then(initPage).catch(initPage);
-    } else {
-      window.addEventListener('load', initPage);
-    }
-    setTimeout(initPage, 5000);
+    window.addEventListener('load', initPage);
+    setTimeout(initPage, 4000);
 
     (function createParticles() {
       const c = document.getElementById('heroParticles');
