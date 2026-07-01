@@ -721,21 +721,26 @@
     });
     let typingIndex = 0;
     let typingTimer = null;
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        switchLanguage(currentLang);
-        hidePreloader();
-      });
-    } else {
-      switchLanguage(currentLang);
-      window.addEventListener('load', hidePreloader);
-    }
-    setTimeout(hidePreloader, 4000);
-
     function hidePreloader() {
       const p = document.getElementById('preloader');
       if (p && !p.classList.contains('hidden')) p.classList.add('hidden');
     }
+
+    function initPage() {
+      switchLanguage(currentLang);
+      hidePreloader();
+    }
+
+    if (document.fonts && document.fonts.load) {
+      Promise.all([
+        document.fonts.load('1rem "Space Grotesk"'),
+        document.fonts.load('1rem "Syne"'),
+        document.fonts.load('1rem Cairo')
+      ]).then(initPage).catch(initPage);
+    } else {
+      window.addEventListener('load', initPage);
+    }
+    setTimeout(initPage, 5000);
 
     (function createParticles() {
       const c = document.getElementById('heroParticles');
