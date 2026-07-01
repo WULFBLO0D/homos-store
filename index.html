@@ -721,13 +721,21 @@
     });
     let typingIndex = 0;
     let typingTimer = null;
-    switchLanguage(currentLang);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        switchLanguage(currentLang);
+        hidePreloader();
+      });
+    } else {
+      switchLanguage(currentLang);
+      window.addEventListener('load', hidePreloader);
+    }
+    setTimeout(hidePreloader, 4000);
 
     function hidePreloader() {
-      setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 600);
+      const p = document.getElementById('preloader');
+      if (p && !p.classList.contains('hidden')) p.classList.add('hidden');
     }
-    window.addEventListener('load', hidePreloader);
-    setTimeout(hidePreloader, 5000);
 
     (function createParticles() {
       const c = document.getElementById('heroParticles');
